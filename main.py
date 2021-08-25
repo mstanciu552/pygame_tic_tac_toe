@@ -39,12 +39,13 @@ while running:
                 running = False
         if event.type == MOUSEBUTTONUP:
             turn += 1 # if X or O placed change turn 
-            print(pygame.mouse.get_pos())
 
     board.draw(win)
     if not board.check_win():
         board.check_click(win, turn)
-    print(board.check_win())
+    else:
+        winner = game_font.render(f'We have a winner', True, RED)
+        win.blit(winner, (1050, 300))
 
     button.draw(win)
     button.check_click()
