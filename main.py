@@ -21,6 +21,7 @@ xo_font = pygame.font.SysFont('Iosevka', 300)
 
 def clean():
     win.fill(WHITE)
+    board.clear_board()
 
 board = Board(xo_font, RED, BLUE)
 button = Button("Try again", GREEN, pos=(1070, HEIGHT / 2), font=game_font, callback=clean)
@@ -41,7 +42,9 @@ while running:
             print(pygame.mouse.get_pos())
 
     board.draw(win)
-    board.check_click(win, turn)
+    if not board.check_win():
+        board.check_click(win, turn)
+    print(board.check_win())
 
     button.draw(win)
     button.check_click()

@@ -16,6 +16,36 @@ class Board:
             for y in range(3):
                 pygame.draw.rect(win, (0, 0, 0), pygame.Rect(x * self.rect_w, y * self.rect_h, self.rect_w, self.rect_h), 2)
 
+    def check_win(self):
+        def is_same_horiz(arr):
+            if arr[0] == arr[1] and arr[1] == arr[2] and arr[0] != '':
+                return True
+            return False
+
+        def is_same_vert(mat):
+            if mat[0][0] == mat[1][0] and mat[1][0] == mat[2][0] and mat[0][0] != '':
+                return True
+            elif mat[0][1] == mat[1][1] and mat[1][1] == mat[2][1] and mat[0][1] != '': 
+                return True
+            elif mat[0][2] == mat[1][2] and mat[1][2] == mat[2][2] and mat[0][2] != '': 
+                return True
+            return False
+
+        def is_same_diag(mat):
+            if mat[0][0] == mat[1][1] and mat[1][1] == mat[2][2] and mat[0][0] != '':
+                return True
+            elif mat[0][2] == mat[1][1] and mat[1][1] == mat[2][0] and mat[0][2] != '':
+                return True
+            return False
+        
+        if is_same_horiz(self.pieces[0]) or is_same_horiz(self.pieces[1]) or is_same_horiz(self.pieces[2]):
+            return True
+        if is_same_vert(self.pieces):
+            return True
+        if is_same_diag(self.pieces):
+            return True
+        return False
+
     def get_length(self):
         length = 0
         
@@ -44,6 +74,9 @@ class Board:
 
         if not pos:
             return
-        if not self.pieces[pos[0]][pos[1]]:
-            self.pieces[pos[0]][pos[1]] = piece
+        if not self.pieces[pos[0]][pos[1]] and pos != (-1, -1) and pos and self.get_length() != -1:
             win.blit(self.X if piece == 'X' else self.O, self.normalize(pos))
+            self.pieces[pos[0]][pos[1]] = piece
+    
+    def clear_board(self):
+        self.pieces = [['', '', ''], ['', '', ''], ['', '', '']]
