@@ -11,6 +11,13 @@ class Board:
     def normalize(self, position):
         return (position[0] * self.rect_w + self.rect_w / 4, position[1] * self.rect_h - self.rect_h / 8)
 
+    def is_full(self):
+        for row in self.pieces:
+            for col in row:
+                if col == '':
+                    return False
+        return True
+
     def draw(self, win):
         for x in range(3):
             for y in range(3):

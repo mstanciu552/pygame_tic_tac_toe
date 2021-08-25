@@ -15,6 +15,7 @@ GREEN = (0, 255, 0)
 
 pygame.init()
 win = pygame.display.set_mode([WIDTH, HEIGHT])
+clock = pygame.time.Clock()
 
 game_font = pygame.font.SysFont('Iosevka', 30)
 xo_font = pygame.font.SysFont('Iosevka', 300)
@@ -41,8 +42,12 @@ while running:
             turn += 1 # if X or O placed change turn 
 
     board.draw(win)
+    print(True)
     if not board.check_win():
         board.check_click(win, turn)
+        if board.is_full():
+            winner = game_font.render('No winner', True, RED)
+            win.blit(winner, (1050, 300))
     else:
         winner = game_font.render(f'We have a winner', True, RED)
         win.blit(winner, (1050, 300))
@@ -50,6 +55,7 @@ while running:
     button.draw(win)
     button.check_click()
 
+    clock.tick(20)
     pygame.display.update()
 
 pygame.quit()
